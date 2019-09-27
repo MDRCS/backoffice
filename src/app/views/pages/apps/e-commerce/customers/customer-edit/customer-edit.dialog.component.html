@@ -1,0 +1,203 @@
+<div class="kt-portlet"
+	[ngClass]="{ 'kt-portlet--body-progress kt-portlet--body-progress-overlay' : viewLoading }">
+	<!-- <div class="kt-portlet" [ngClass]="{ 'kt-portlet--body-progress' : viewLoading, 'kt-portlet--body-progress-overlay' : loadingAfterSubmit }"> -->
+		<div class="kt-portlet__head kt-portlet__head__custom">
+			<div class="kt-portlet__head-label">
+				<h3 class="kt-portlet__head-title">{{getTitle()}}</h3>
+			</div>
+		</div>
+		<form class="kt-form" [formGroup]="customerForm">
+			<div class="kt-portlet__body">
+	
+				<div class="kt-portlet__body-progress">
+					<mat-spinner [diameter]="20"></mat-spinner>
+				</div>
+	
+				<kt-alert *ngIf="hasFormErrors" type="warn" [duration]="30000" [showCloseButton]="true" (close)="onAlertClose($event)">
+					Oh snap! Change a few things up and try submitting again.
+				</kt-alert>
+	
+				<div class="form-group kt-form__group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<mat-form-field class="mat-form-field-fluid">
+							<input matInput placeholder="Enter Company's Name" formControlName="name" />
+							<mat-error>Company is
+								<strong>required</strong>
+							</mat-error>
+							<mat-hint align="start">Please enter
+								<strong>Company Name</strong>
+							</mat-hint>
+						</mat-form-field>
+					</div>
+				</div>
+	
+					<div class="kt-separator kt-separator--dashed"></div>
+					<div class="form-group kt-form__group row">
+							
+							<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									<mat-form-field class="mat-form-field-fluid">
+											<input matInput placeholder="Enter Company's Acronym" formControlName="acronym" />
+											<mat-error>Acronym is
+												<strong>required</strong>
+											</mat-error>
+											<mat-hint align="start">Please enter
+												<strong>Company's Acronym</strong>
+											</mat-hint>
+										</mat-form-field>
+								</div>
+	
+								<div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+												<input matInput placeholder="Enter Company's Activity" formControlName="activity" />
+												<mat-error>Activity is
+													<strong>required</strong>
+												</mat-error>
+												<mat-hint align="start">Please enter
+													<strong>Company's Activity</strong>
+												</mat-hint>
+											</mat-form-field>
+									</div>
+	
+									<div class="col-lg-4 kt-margin-bottom-20-mobile">
+											<mat-form-field class="mat-form-field-fluid">
+													<input type="text" matInput placeholder="Enter Number Phone" formControlName="phone" />
+													<mat-error>Number Phone 
+														<strong>required</strong>
+													</mat-error>
+													<mat-hint align="start">Please enter
+														<strong>Number Phone</strong> 
+													</mat-hint>
+												</mat-form-field>
+										</div>
+										<!-- <kt-client-users-list></kt-client-users-list> -->
+						</div>
+	
+				<div class="kt-separator kt-separator--dashed"></div>
+				<div class="form-group kt-form__group row">
+						<div class="col-lg-4 kt-margin-bottom-20-mobile">
+								<mat-form-field class="mat-form-field-fluid">
+									<input type="text" matInput placeholder="Enter Address" formControlName="address" />
+									<mat-error>Address
+										<strong>required</strong>
+									</mat-error>
+									<mat-hint align="start">Please enter
+										<strong>Address</strong> 
+									</mat-hint>
+								</mat-form-field>
+							</div>
+							<div class="col-lg-4 kt-margin-bottom-20-mobile">
+									<mat-form-field class="mat-form-field-fluid">
+										<mat-select placeholder="Type" formControlName="type">
+												<mat-option value='chargeur_lite'>CHARGER LITE</mat-option>
+												<mat-option value='chargeur'>CHARGER</mat-option>
+												<mat-option value='transporteur'>TRANSPORTER</mat-option>
+										</mat-select>
+										<mat-hint align="start">
+											<strong>Client Type</strong>
+										</mat-hint>
+									</mat-form-field>
+								</div>
+
+								
+								
+	
+							</div>
+	
+	
+							<!-- <div class="col-lg-4 kt-margin-bottom-20-mobile">
+										<mat-form-field class="mat-form-field-fluid">
+										<mat-label>Transporters</mat-label>
+										<mat-select [formControl]="transporters" multiple>
+										  <mat-option [value]="transporter" [ngModelOptions]="{standalone: true}" [(ngModel)]="transporter.isSelected" 
+										  (change)="isSelectedChanged($event, transporter)" *ngFor="let transporter of clientTransporters" >{{transporter.name}}</mat-option>
+										</mat-select>
+									  </mat-form-field>
+			
+									</div> -->
+								
+						
+	
+									
+	
+									<!-- <kt-client-users-list></kt-client-users-list> -->
+	
+					<div class="kt-separator kt-separator--dashed"></div>
+					<div class="form-group kt-form__group row">
+					<div class="col-lg-4 kt-margin-bottom-20-mobile">
+						<div>Truckers Team :</div>
+						
+							<mat-radio-group formControlName="equip_truck" class="example-radio-group">
+								<mat-radio-button class="example-radio-button" value="1">True</mat-radio-button>
+								<mat-radio-button class="example-radio-button" value="0">False</mat-radio-button>
+							</mat-radio-group>
+							
+							</div>
+	
+							<div class="col-lg-8">
+								<div>Carriers :</div>
+							   <div class="col-lg-4 kt-margin-bottom-20-mobile" style="border: 3px solid rgba(0, 0, 0, 0.5); border-radius: 10px 10px 10px 10px; overflow: scroll; height: 10rem ; background-color: #f7f8fa  ;">
+									<div class="kt-timeline-3__items">
+										<div *ngFor="let _rootClient of clientTransporters" class="kt-timeline-3__inner">
+											<div class="kt-timeline-3__item kt-border-bottom-grey kt-py-15 kt-bg-grey">
+												<span class="kt-timeline-3__item-time">
+													<mat-checkbox [(ngModel)]="_rootClient.isSelected" 
+														(change)="isSelectedChanged($event, _rootClient )" [ngModelOptions]="{standalone: true}">{{ _rootClient.name }}</mat-checkbox> 
+												</span>
+											</div>
+										</div>
+									</div>
+								</div> 	 
+							</div> 
+
+								 <!-- <form>
+										<mat-form-field class="full-width">
+											<mat-select placeholder="Transporters" multiple>
+												<mat-option [(ngModel)]="_rootClient.isSelected" 
+												(change)="isSelectedChanged($event, _rootClient )"  *ngFor="let _rootClient of clientTransporters" [value]="_rootClient" [ngModelOptions]="{standalone: true}">
+														{{ _rootClient.name }}
+												</mat-option>
+											</mat-select>
+										</mat-form-field>
+									
+										</form> --> 
+
+							<!-- <mat-form-field>
+									<mat-select placeholder="Transporters" [formControl]="transporters" multiple>
+									  <mat-select-trigger>
+										{{transporters.value ? transporters.value[0] : ''}}
+										<span *ngIf="transporters.value?.length > 1" class="example-additional-selection">
+										  (+{{transporters.value.length - 1}} {{transporters.value?.length === 2 ? 'other' : 'others'}})
+										</span>
+									  </mat-select-trigger>
+									  <mat-option *ngFor="let _rootClient of clientTransporters"
+									  [(ngModel)]="_rootClient.isSelected" 
+									  (change)="isSelectedChanged($event, _rootClient )" [ngModelOptions]="{standalone: true}">{{_rootClient.name}}</mat-option>
+									</mat-select>
+								  </mat-form-field> -->
+	
+						</div>  
+	
+								 
+	
+					
+	
+				</div>
+	
+	
+			<div class="kt-portlet__foot kt-portlet__no-border kt-portlet__foot--fit">
+				<div class="kt-form__actions kt-form__actions--solid">
+					<div class="row text-right">
+						<div class="col-lg-12">
+							<button type="button" mat-raised-button [mat-dialog-close]="data.animal" cdkFocusInitial matTooltip="Cancel changes">
+								Cancel
+							</button>&nbsp;
+							<button type="button" mat-raised-button color="primary" (click)="onSubmit()" [disabled]="viewLoading" matTooltip="Save changes">
+								Save
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</form>
+	</div>
+	
