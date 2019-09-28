@@ -33,7 +33,11 @@ module.exports = function(config) {
   
       // list of files / patterns to exclude
       exclude: [],
-  
+      
+      captureTimeout: 100,
+      //browserDisconnectTolerance: 3 //# try 3 times to reconnect
+      //browserNoActivityTimeout: 200 //#wait 20 seconds before trying recconnect. 
+
       // web server port
       port: 8080,
   
